@@ -35,21 +35,10 @@ function App() {
 
   return (
     <div className="App">
-
       <form onSubmit={getMovie} className="search">
         <input type="text" placeholder="pesquise aqui seu filme favorito" required onChange={(event) => setName(event.target.value)}/>
         <button type="submit">Pesquisar</button>
       </form>
-
-      
-          <div className="">
-            <span>{movie.original_title}</span>
-            <span>{movie.overview}</span>
-            <span>{movie.vote_average}</span>
-          </div>
-        
-      
-      
     </div>
   );
 }
