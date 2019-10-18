@@ -16,29 +16,42 @@ function App() {
     event.preventDefault();
     let api_call = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${api}&language=en-US&query=${name}&page=1&include_adult=false`);
     let data = await api_call.json();
-    console.log(data);
-    setMovie(data);
+    setMovie(data.results);
+    console.log(data.results);
+    
   }
 
+
   const moviesList = async() => {
-    let api_call = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${api}&language=en-US`);
-    let data = await api_call.json();
-    
-    data.genres.map(async(i) => {
-      const id = i.id;
-      let lista = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${api}&language=en-US`);
-      let data = await lista.json();
-      console.log(data);
-    })
+    for(let i = 0; i <= 50; i++ ){
+      const teste = Math.floor(Math.random() * 450);
+      const lista = await fetch(`https://api.themoviedb.org/3/movie/${teste}?api_key=${api}&language=en-US`);
+      const data = await lista.json();
+      setMovieList({ data });
+    }
     
   }
 
   return (
     <div className="App">
+
       <form onSubmit={getMovie} className="search">
         <input type="text" placeholder="pesquise aqui seu filme favorito" required onChange={(event) => setName(event.target.value)}/>
         <button type="submit">Pesquisar</button>
       </form>
+      {
+        movie.map(movies => {
+          return(
+            <ul key={movies.id}>
+              <li>{movies.original_title}</li>
+              <img src={`http://image.tmdb.org/t/p/w185/${movies.poster_path}`} alt="poster"/>
+            </ul>
+          )
+        })
+      }
+      
+      
+      
     </div>
   );
 }
